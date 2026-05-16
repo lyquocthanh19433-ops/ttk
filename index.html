@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>alooooo 🥺</title>
+  <title>Tuấn Khang ơi 🥺</title>
   <style>
     * {
       box-sizing: border-box;
@@ -51,18 +51,7 @@
       box-shadow: 0 22px 60px rgba(214, 77, 132, 0.22);
     }
 
-    .top-note {
-      display: inline-block;
-      margin-bottom: 14px;
-      padding: 8px 14px;
-      font-size: 14px;
-      font-weight: 700;
-      color: #d63f83;
-      background: #fff0f7;
-      border-radius: 999px;
-    }
-
-    h1 {
+        h1 {
       font-size: clamp(25px, 6vw, 34px);
       line-height: 1.22;
       margin-bottom: 14px;
@@ -90,21 +79,26 @@
 
     .buttons {
       position: relative;
-      height: 90px;
+      height: 100px;
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      gap: 18px;
+      gap: 16px;
+      width: 100%;
+      margin-top: 4px;
     }
 
     button {
       border: none;
       cursor: pointer;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 800;
       border-radius: 999px;
-      padding: 14px 28px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, left 0.25s ease, top 0.25s ease;
+      padding: 14px 22px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, left 0.25s ease, top 0.25s ease, opacity 0.25s ease;
+      min-width: 130px;
+      max-width: 48%;
+      min-height: 54px;
     }
 
     #yesBtn {
@@ -119,13 +113,13 @@
     }
 
     #noBtn {
-      position: absolute;
+      position: relative;
       color: #d64282;
       background: #fff;
       border: 2px solid #ff9ac5;
       box-shadow: 0 8px 18px rgba(255, 131, 182, 0.22);
-      left: calc(50% + 35px);
-      top: 22px;
+      left: auto;
+      top: auto;
     }
 
     .message {
@@ -189,7 +183,7 @@
 
   <main class="card" id="card">
     <section id="questionBox">
-      <div class="top-note">Tuấn Khang ơi, đọc hết rồi hãy giận tiếp nha 🥺</div>
+      
       <h1>đừng có quạo nữa màaaa</h1>
       <p class="subtitle" id="subtitle">chọn một cái đi màaa 🥺</p>
 
@@ -236,20 +230,26 @@
     let yesScale = 1;
 
     function moveNoButton() {
-      const areaRect = buttonArea.getBoundingClientRect();
-      const btnRect = noBtn.getBoundingClientRect();
-
-      const maxX = areaRect.width - btnRect.width;
-      const maxY = areaRect.height - btnRect.height;
-
-      const randomX = Math.max(0, Math.random() * maxX);
-      const randomY = Math.max(0, Math.random() * maxY);
-
-      noBtn.style.left = `${randomX}px`;
-      noBtn.style.top = `${randomY}px`;
+      if (noCount >= 5) return;
 
       subtitle.textContent = noTexts[noCount % noTexts.length];
       noCount++;
+
+      if (noCount >= 5) {
+        noBtn.style.opacity = "0";
+        noBtn.style.transform = "scale(0.8)";
+        setTimeout(() => {
+          noBtn.style.display = "none";
+        }, 250);
+        subtitle.textContent = "hết đường giận rồi nhaaa 🥺";
+        return;
+      }
+
+      const maxMove = 28;
+      const randomX = (Math.random() * maxMove * 2) - maxMove;
+      const randomY = (Math.random() * maxMove * 2) - maxMove;
+
+      noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
 
       yesScale += 0.08;
       yesBtn.style.transform = `scale(${yesScale})`;
